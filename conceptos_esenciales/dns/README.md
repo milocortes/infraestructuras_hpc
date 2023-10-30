@@ -23,7 +23,7 @@ Renombramos el hostname al editar los archivos ```/etc/hostname``` y ```/etc/hos
   [root@dns-server ~]# nmcli connection add con-name enp0s8 ifname enp0s8 type ethernet
   [root@dns-server ~]# nmcli connection modify enp0s8 ipv4.addresses 192.168.1.250/24
   [root@dns-server ~]# nmcli connection modify enp0s8 ipv4.method manual
-  [root@dns-server ~]# nmcli connection modify enp0s8 ipv4.dns "192.168.1.250"
+  [root@dns-server ~]# nmcli connection modify enp0s8 ipv4.dns 192.168.1.250
   [root@dns-server ~]# nmcli connection up enp0s8
 ```
 
@@ -34,6 +34,13 @@ Renombramos el hostname al editar los archivos ```/etc/hostname``` y ```/etc/hos
 ```
 
 4. Crear un archivo de resolución por dominio. Se creará el archivo ```/var/named/diplomado.hpc```:
+
+>#### Significado de los parámetros
+* Serial: El número de serie de la zona. Si un servidor de nombres secundario esclavo de este observa un aumento en este número, el esclavo asumirá que la zona ha sido actualizada e iniciará una transferencia de zona.
+* Refresh: Es el número de segundos entre solicitudes de actualización de los servidores de nombres secundarios y esclavos.
+* Retry: Es el número de segundos que el secundario o esclavo esperará antes de volver a intentarlo cuando el último intento haya fallado.
+*Expire: Es el número de segundos que un maestro o esclavo esperará antes de considerar los datos obsoletos si no pueden llegar al servidor de nombres principal.
+* Minimum TTL: utilizado anteriormente para determinar el TTL mínimo, se utiliza para el almacenamiento en caché. Este es el TTL predeterminado si el dominio no especifica un TTL.
 
 5. Verificar la configuración del archivo de resolución por dominio:
 
