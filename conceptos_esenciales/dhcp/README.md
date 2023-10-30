@@ -34,7 +34,44 @@ root@dhcp-server ~]# cp /usr/lib/systemd/system/dhcpd.service /etc/systemd/syste
 
 4. Editar el archivo ```/etc/systemd/system/dhcpd.service``` y colocar el dispositivo de red, en el parámetro ```ExecStart```, en el que el servidor DHCP escuchará:
 
+```properties
+[Unit]
+Description=DHCPv4 Server Daemon
+Documentation=man:dhcpd(8) man:dhcpd.conf(5)
+Wants=network-online.target
+After=network-online.target
+After=time-sync.target
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/sysconfig/dhcpd
+ExecStart=/usr/sbin/dhcpd -f -cf /etc/dhcp/dhcpd.conf -user dhcpd -group dhcpd --no-pid $DHCPDARGS enp0s8
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target
+```
 5. Editar el archivo de configuración del servidor DHCP (```/etc/dhcp/dhcpd.conf```):
+```properties
+#
+# DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp-server/dhcpd.conf.example
+#   see dhcpd.conf(5) man page
+#
+option domain-name "diplomado.hpc";
+option domain-name-servers dns-server.diplomado.hpc;
+default-lease-time 86400; # Concesión en segundos
+max-lease-time 172800; # Tiempo máximo de arrendamiento otorgado a los clientes.
+# Si se solicita una concesión por encima de este tiempo, se asigna el máximo.
+authoritative;
+subnet 192.168.1.0 netmask 255.255.255.0 {
+ option routers 192.168.1.254;
+option subnet-mask 255.255.255.0;
+option domain-search "diplomado.hpc";
+option domain-name-servers 192.168.1.250;
+ range 192.168.1.1 192.168.1.10;
+}
+```
 
 6. Arrancar el servidor DHCP y habilitarlo:
 ```console

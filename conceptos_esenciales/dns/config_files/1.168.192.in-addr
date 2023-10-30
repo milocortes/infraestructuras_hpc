@@ -1,0 +1,19 @@
+$TTL 86400
+@ IN SOA dns-server.diplomado.hpc. root.diplomado.hpc. (
+ 2011071001 ; Serial
+ 3600 ; Refresh
+ 1800 ; Retry
+ 604800 ; Expire
+ 86400 ; Minimum TTL
+)
+@ IN NS dns-server.diplomado.hpc.
+@ IN PTR diplomado.hpc.
+dns-server IN A 192.168.1.250
+n1 IN A 192.168.1.1
+n2 IN A 192.168.1.2
+n3 IN A 192.168.1.3
+250 IN PTR dns-server.diplomado.hpc.
+1 IN PTR n1.diplomado.hpc.
+2 IN PTR n2.diplomado.hpc.
+3 IN PTR n3.diplomado.hpc.
+
