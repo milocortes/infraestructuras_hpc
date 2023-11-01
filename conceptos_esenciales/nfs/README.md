@@ -57,9 +57,9 @@ Donde:
 
 El siguiente es un ejemplo del archivo ```/etc/exports```:
 ```properties
-/exports/docs 10.10.10.0/24 (ro,no_subtree_check)
-/exports/images 10.10.10.0/24 (rw,no_subtree_check)
-/exports/downloads 10.10.10.0/24 (rw,no_subtree_check)
+/exports/docs 10.10.10.0/24(ro,no_subtree_check)
+/exports/images 10.10.10.0/24(rw,no_subtree_check)
+/exports/downloads 10.10.10.0/24(rw,no_subtree_check)
 ```
 
 La primera sección contiene el directorio que estamos exportando a los otros nodos de la red. En la segunda sección estamos limitando el acceso a los nodos dentro de la red 10.10.10.0/24. La tercera sección indica los permisos a los recursos compartidos:
